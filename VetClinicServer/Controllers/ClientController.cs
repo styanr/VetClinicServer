@@ -1,40 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VetClinicServer.Models;
+using VetClinicServer.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace VetClinicServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/clients")]
     [ApiController]
-    public class TestController : ControllerBase
+    public class ClientController : ControllerBase
     {
-        // GET: api/<TestController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IClientService clientService;
+
+        public ClientController(IClientService clientService)
         {
-            return new string[] { "value1", "value2" };
+            this.clientService = clientService;
         }
 
-        // GET api/<TestController>/5
+        [HttpGet]
+        public async Task<IEnumerable<Client>> Get()
+        {
+            return await clientService.GetAllClients();
+        }
+
+        // GET api/<ClientController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<TestController>
+        // POST api/<ClientController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<TestController>/5
+        // PUT api/<ClientController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<TestController>/5
+        // DELETE api/<ClientController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

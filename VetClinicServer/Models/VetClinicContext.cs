@@ -13,11 +13,9 @@ public partial class VetClinicContext : DbContext
     public VetClinicContext(DbContextOptions<VetClinicContext> options)
         : base(options)
     {
-    }
+    } 
 
     public virtual DbSet<Appointment> Appointments { get; set; }
-
-    public virtual DbSet<AppointmentInfo> AppointmentInfos { get; set; }
 
     public virtual DbSet<AppointmentType> AppointmentTypes { get; set; }
 
@@ -59,11 +57,6 @@ public partial class VetClinicContext : DbContext
                 .HasConstraintName("FK_Appointments_Patients");
 
             entity.HasOne(d => d.Type).WithMany(p => p.Appointments).HasConstraintName("FK_Appointments_AppointmentTypes");
-        });
-
-        modelBuilder.Entity<AppointmentInfo>(entity =>
-        {
-            entity.ToView("AppointmentInfo");
         });
 
         modelBuilder.Entity<AppointmentType>(entity =>

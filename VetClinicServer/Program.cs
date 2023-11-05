@@ -1,5 +1,6 @@
 
 using VetClinicServer.Models;
+using VetClinicServer.Services;
 
 namespace VetClinicServer
 {
@@ -12,6 +13,7 @@ namespace VetClinicServer
             // Add services to the container.
             builder.Services.AddDbContext<VetClinicContext>();
             builder.Services.AddControllers();
+            builder.Services.AddScoped<IClientService, ClientService>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
