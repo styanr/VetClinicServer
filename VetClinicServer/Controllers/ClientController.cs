@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using VetClinicServer.Models;
 using VetClinicServer.Services;
 
@@ -10,42 +12,61 @@ namespace VetClinicServer.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private IClientService clientService;
+        private readonly IClientService _clientService;
 
         public ClientController(IClientService clientService)
         {
-            this.clientService = clientService;
+            _clientService = clientService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Client>> Get()
+        public async Task<ActionResult<IEnumerable<Client>>> GetClients()
         {
-            return await clientService.GetAllClients();
+            var clients = await _clientService.GetAllClients();
+            return Ok(clients);
         }
 
-        // GET api/<ClientController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Client>> GetClient(int id)
         {
-            return "value";
+            var client = await _clientService.GetClientById(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(client);
         }
 
-        // POST api/<ClientController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<Client>> PostClient([FromBody] Client client)
         {
+            var createdClient = await _clientService.CreateClient(client);
+            
+            return CreatedAtAction(nameof(GetClient), new { id = client.ClientId }, client);
         }
 
-        // PUT api/<ClientController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<Client>> Put([FromBody] Client client)
         {
+            var updatedClient = await _clientService.UpdateClient(client);
+            if (updatedClient == null)
+            {
+                return NotFound();
+            }
+            
+            return NoContent();
         }
 
-        // DELETE api/<ClientController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            if (await _clientService.RemoveClient(id))
+            {
+                return NoContent();
+            }
+
+            return NotFound("Client not found.");
         }
     }
 }

@@ -6,7 +6,7 @@ namespace VetClinicServer.Services
 {
     public class ClientService : IClientService
     {
-        VetClinicContext _context;
+        private readonly VetClinicContext _context;
 
         public ClientService(VetClinicContext context)
         {
@@ -18,7 +18,7 @@ namespace VetClinicServer.Services
             return await _context.Clients.ToListAsync();
         }
 
-        public async Task<Client?> GetClientByIdAsync(int clientId)
+        public async Task<Client?> GetClientById(int clientId)
         {
             if (clientId <= 0)
             {
@@ -26,15 +26,14 @@ namespace VetClinicServer.Services
             }
 
             return await _context.Clients.FindAsync(clientId);
-
         }
 
         public async Task<Client?> CreateClient(Client client)
         {
-            _context.Add(client);
+            _context.Clients.Add(client);
+
 
             await _context.SaveChangesAsync();
-
             return await _context.Clients.FindAsync(client.ClientId);
         }
 
@@ -45,8 +44,8 @@ namespace VetClinicServer.Services
             {
                 return null;
             }
-            _context.Entry(cl).CurrentValues.SetValues(client);
 
+            _context.Entry(cl).CurrentValues.SetValues(client);
             await _context.SaveChangesAsync();
 
             return client;
@@ -63,6 +62,7 @@ namespace VetClinicServer.Services
 
             _context.Clients.Remove(client);
             await _context.SaveChangesAsync();
+
             return true;
         }
     }

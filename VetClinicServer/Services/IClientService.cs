@@ -7,7 +7,7 @@ namespace VetClinicServer.Services
     {
         public Task<IEnumerable<Client>> GetAllClients();
 
-        public Task<Client?> GetClientByIdAsync(int clientId);
+        public Task<Client?> GetClientById(int clientId);
 
         public Task<Client?> CreateClient(Client client);
 
