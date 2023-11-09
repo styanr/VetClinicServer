@@ -44,7 +44,7 @@ namespace VetClinicServer.Controllers
             return CreatedAtAction(nameof(GetPatient), new { id = newPatient.PatientId }, newPatient);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutPatient([FromBody] Patient patient)
         {
             var updatedPatient = await _patientService.UpdatePatient(patient);
