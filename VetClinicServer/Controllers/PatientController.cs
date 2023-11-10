@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VetClinicServer.DTOs;
+using VetClinicServer.Exceptions;
 using VetClinicServer.Models;
 using VetClinicServer.Services;
 
@@ -17,41 +19,34 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
+        public async Task<ActionResult<IEnumerable<PatientDTO>>> GetPatients()
         {
             var patients = await _patientService.GetAllPatients();
+            
             return Ok(patients);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Patient>> GetPatient(int id)
+        public async Task<ActionResult<PatientDTO>> GetPatient(int id)
         {
             var patient = await _patientService.GetPatientById(id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
 
             return Ok(patient);
         }
 
 
         [HttpPost]
-        public async Task<ActionResult<Patient>> PostPatient([FromBody] Patient patient)
+        public async Task<IActionResult> PostPatient([FromBody] PatientDTO patientDto)
         {
-            var newPatient = await _patientService.CreatePatient(patient);
+            patientDto = await _patientService.CreatePatient(patientDto);
             
-            return CreatedAtAction(nameof(GetPatient), new { id = newPatient.PatientId }, newPatient);
+            return CreatedAtAction(nameof(GetPatient), new { id = patientDto.PatientId }, patientDto);
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutPatient([FromBody] Patient patient)
+        public async Task<IActionResult> PutPatient([FromBody] PatientDTO patientDto)
         {
-            var updatedPatient = await _patientService.UpdatePatient(patient);
-            if (updatedPatient == null)
-            {
-                return NotFound();
-            }
+            await _patientService.UpdatePatient(patientDto);
 
             return NoContent();
         }

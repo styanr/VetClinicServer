@@ -27,64 +27,39 @@ namespace VetClinicServer.Controllers
         {
             var clients = await _clientService.GetAllClients();
 
-
             return Ok(clients);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ClientDTO>> GetClient(int id)
         {
-            try
-            {
-                var client = await _clientService.GetClientById(id);
-                return Ok(client);
-            }
-            catch (ResourceNotFoundException exception)
-            {
-                return NotFound(exception.Message);
-            }
+            var client = await _clientService.GetClientById(id);
+            
+            return Ok(client);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ClientDTO>> PostClient([FromBody] ClientDTO client)
+        public async Task<ActionResult<ClientDTO>> PostClient([FromBody] ClientDTO clientDto)
         {
-            await _clientService.CreateClient(client);
+            clientDto = await _clientService.CreateClient(clientDto);
             
-            return CreatedAtAction(nameof(GetClient), new { id = client.ClientId }, client);
+            return CreatedAtAction(nameof(GetClient), new { id = clientDto.ClientId }, clientDto);
         }
 
         [HttpPut]
-        public async Task<ActionResult<ClientDTO>> Put([FromBody] ClientDTO client)
+        public async Task<ActionResult<ClientDTO>> Put([FromBody] ClientDTO clientDto)
         {
-            try
-            {
-                await _clientService.UpdateClient(client);
-            }
-            catch (ResourceNotFoundException exception)
-            {
-                return NotFound(new { message = exception.Message });
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(new { message = exception.Message});
-            }
-
+            await _clientService.UpdateClient(clientDto);
+            
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            try
-            {
-                if (await _clientService.RemoveClient(id))
-                    return NoContent();
-                return BadRequest();
-            }
-            catch (ResourceNotFoundException exception)
-            {
-                return NotFound(new { message = exception.Message });
-            }
+            if (await _clientService.RemoveClient(id))
+                return NoContent();
+            return BadRequest();
         }
     }
 }

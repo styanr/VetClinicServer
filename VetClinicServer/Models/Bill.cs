@@ -18,7 +18,7 @@ public partial class Bill
     [Column("amount", TypeName = "decimal(10, 2)")]
     public decimal Amount { get; set; }
 
-    [Column("paymentDate", TypeName = "datetime")]
+    [Column("paymentDate", TypeName = "date")]
     public DateTime? PaymentDate { get; set; }
 
     [Column("statusId")]

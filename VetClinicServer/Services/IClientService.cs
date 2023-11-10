@@ -10,9 +10,9 @@ namespace VetClinicServer.Services
 
         public Task<ClientDTO> GetClientById(int clientId);
 
-        public Task<ClientDTO> CreateClient(ClientDTO client);
+        public Task<ClientDTO> CreateClient(ClientDTO clientDto);
 
-        public Task<ClientDTO> UpdateClient(ClientDTO client);
+        public Task<ClientDTO> UpdateClient(ClientDTO clientDto);
 
         public Task<bool> RemoveClient(int clientId);
     }

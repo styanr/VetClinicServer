@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Diagnostics;
+using VetClinicServer.Filters;
 using VetClinicServer.Models;
 using VetClinicServer.Services;
 
@@ -14,8 +15,14 @@ namespace VetClinicServer
             // Add services to the container.
             builder.Services.AddDbContext<VetClinicContext>();
             builder.Services.AddAutoMapper(typeof(Program));
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(c =>
+            {
+                c.Filters.Add<CustomExceptionFilter>();
+            });
+
             builder.Services.AddScoped<IClientService, ClientService>();
+            builder.Services.AddScoped<IPatientService, PatientService>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>

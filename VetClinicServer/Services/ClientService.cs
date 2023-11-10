@@ -32,33 +32,37 @@ namespace VetClinicServer.Services
             var client = await _context.Clients.FindAsync(clientId);
             if (client == null)
             {
-                throw new ResourceNotFoundException($"Client with ID {clientId} not found.");
+                throw new ResourceNotFoundException(
+                    $"Client with ID {clientId} not found.");
             }
 
             return _mapper.Map<Client, ClientDTO>(client);
         }
 
-        public async Task<ClientDTO> CreateClient(ClientDTO client)
+        public async Task<ClientDTO> CreateClient(ClientDTO clientDto)
         {
-            _context.Clients.Add(_mapper.Map<ClientDTO, Client>(client));
+            var client = _mapper.Map<ClientDTO, Client>(clientDto);
+            _context.Clients.Add(client);
 
             await _context.SaveChangesAsync();
-            return client;
+
+            clientDto.ClientId = client.ClientId;
+            return clientDto;
         }
 
-        public async Task<ClientDTO> UpdateClient(ClientDTO client)
+        public async Task<ClientDTO> UpdateClient(ClientDTO clientDto)
         {
-            var cl = await _context.Clients.FindAsync(client.ClientId);
+            var cl = await _context.Clients.FindAsync(clientDto.ClientId);
             if (cl == null)
             {
-                throw new ResourceNotFoundException($"Client with ID {client.ClientId} not found.");
+                throw new ResourceNotFoundException(
+                    $"Client with ID {clientDto.ClientId} not found.");
             }
 
-            _context.Entry(cl).CurrentValues.SetValues(_mapper.Map<ClientDTO, Client>(client));
+            _context.Entry(cl).CurrentValues.SetValues(_mapper.Map<ClientDTO, Client>(clientDto));
             await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
-            return client;
+            return clientDto;
         }
 
         public async Task<bool> RemoveClient(int clientId)
@@ -67,7 +71,8 @@ namespace VetClinicServer.Services
 
             if (client == null)
             {
-                throw new ResourceNotFoundException($"Client with ID {clientId} not found.");
+                throw new ResourceNotFoundException(
+                    $"Client with ID {clientId} not found.");
             }
 
             _context.Clients.Remove(client);

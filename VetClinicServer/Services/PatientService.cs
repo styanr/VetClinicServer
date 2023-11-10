@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using VetClinicServer.DTOs;
+using VetClinicServer.Exceptions;
 using VetClinicServer.Models;
 
 namespace VetClinicServer.Services
@@ -6,61 +9,79 @@ namespace VetClinicServer.Services
     public class PatientService : IPatientService
     {
         private readonly VetClinicContext _context;
+        private readonly IMapper _mapper;
+        private readonly IClientService _clientService;
 
-        public PatientService(VetClinicContext context)
+        public PatientService(VetClinicContext context, IMapper mapper, IClientService clientService)
         {
             _context = context;
+            _mapper = mapper;
+            _clientService = clientService;
         }
 
-        public async Task<IEnumerable<Patient>> GetAllPatients()
+        public async Task<IEnumerable<PatientDTO>> GetAllPatients()
         {
-            return await _context.Patients.ToListAsync();
+            return await _mapper.ProjectTo<PatientDTO>(_context.Patients).ToListAsync();
         }
 
-        public async Task<Patient?> GetPatientById(int patientId)
+        public async Task<PatientDTO> GetPatientById(int patientId)
         {
             if (patientId < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(patientId));
             }
 
-            return await _context.Patients.FindAsync(patientId);
+            var patient = await _context.Patients.FindAsync(patientId);
+            if (patient == null)
+            {
+                throw new ResourceNotFoundException(
+                    $"Patient with ID {patientId} not found.");
+            }
+
+            return _mapper.Map<Patient, PatientDTO>(patient);
         }
 
-        public async Task<Patient?> CreatePatient(Patient patient)
+        public async Task<PatientDTO> CreatePatient(PatientDTO patientDto)
         {
+
+            var patient = _mapper.Map<PatientDTO, Patient>(patientDto);
             _context.Patients.Add(patient);
 
             await _context.SaveChangesAsync();
-            return await _context.Patients.FindAsync(patient.PatientId);
+
+            patientDto.PatientId = patient.PatientId;
+            return patientDto;
         }
 
-        public async Task<Patient?> UpdatePatient(Patient patient)
+        public async Task<PatientDTO> UpdatePatient(PatientDTO patientDto)
         {
-            var pt = await _context.Patients.FindAsync(patient.PatientId);
+            var pt = await _context.Patients.FindAsync(patientDto.PatientId);
             if (pt == null)
             {
-                return null;
+                throw new ResourceNotFoundException(
+                    $"Patient with ID {patientDto.PatientId} not found.");
             }
 
-            _context.Entry(pt).CurrentValues.SetValues(patient);
+            _context.Entry(pt).CurrentValues.SetValues(patientDto);
             await _context.SaveChangesAsync();
 
-            return patient;
+            return patientDto;
         }
 
         public async Task<bool> RemovePatient(int patientId)
         {
             var patient = await _context.Patients.FindAsync(patientId);
+            
             if (patient == null)
             {
-                return false;
+                throw new ResourceNotFoundException(
+                    $"Patient with ID {patientId} not found.");
             }
 
             _context.Remove(patient);
-            await _context.SaveChangesAsync();
+            int rowsAffected = await _context.SaveChangesAsync();
 
-            return true;
+            return rowsAffected > 0;
         }
     }
 }
