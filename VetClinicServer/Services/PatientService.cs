@@ -34,8 +34,7 @@ namespace VetClinicServer.Services
             var patient = await _context.Patients.FindAsync(patientId);
             if (patient == null)
             {
-                throw new ResourceNotFoundException(
-                    $"Patient with ID {patientId} not found.");
+                throw new PatientNotFoundException(patientId);
             }
 
             return _mapper.Map<Patient, PatientDTO>(patient);
@@ -43,7 +42,6 @@ namespace VetClinicServer.Services
 
         public async Task<PatientDTO> CreatePatient(PatientDTO patientDto)
         {
-
             var patient = _mapper.Map<PatientDTO, Patient>(patientDto);
             _context.Patients.Add(patient);
 
@@ -58,8 +56,7 @@ namespace VetClinicServer.Services
             var pt = await _context.Patients.FindAsync(patientDto.PatientId);
             if (pt == null)
             {
-                throw new ResourceNotFoundException(
-                    $"Patient with ID {patientDto.PatientId} not found.");
+                throw new PatientNotFoundException(patientDto.PatientId);
             }
 
             _context.Entry(pt).CurrentValues.SetValues(patientDto);
@@ -71,11 +68,10 @@ namespace VetClinicServer.Services
         public async Task<bool> RemovePatient(int patientId)
         {
             var patient = await _context.Patients.FindAsync(patientId);
-            
+
             if (patient == null)
             {
-                throw new ResourceNotFoundException(
-                    $"Patient with ID {patientId} not found.");
+                throw new PatientNotFoundException(patientId);
             }
 
             _context.Remove(patient);

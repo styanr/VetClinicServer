@@ -32,8 +32,7 @@ namespace VetClinicServer.Services
             var client = await _context.Clients.FindAsync(clientId);
             if (client == null)
             {
-                throw new ResourceNotFoundException(
-                    $"Client with ID {clientId} not found.");
+                throw new ClientNotFoundException(clientId);
             }
 
             return _mapper.Map<Client, ClientDTO>(client);
@@ -55,8 +54,7 @@ namespace VetClinicServer.Services
             var cl = await _context.Clients.FindAsync(clientDto.ClientId);
             if (cl == null)
             {
-                throw new ResourceNotFoundException(
-                    $"Client with ID {clientDto.ClientId} not found.");
+                throw new ClientNotFoundException(clientDto.ClientId);
             }
 
             _context.Entry(cl).CurrentValues.SetValues(_mapper.Map<ClientDTO, Client>(clientDto));
@@ -71,8 +69,7 @@ namespace VetClinicServer.Services
 
             if (client == null)
             {
-                throw new ResourceNotFoundException(
-                    $"Client with ID {clientId} not found.");
+                throw new ClientNotFoundException(clientId);
             }
 
             _context.Clients.Remove(client);
@@ -81,4 +78,5 @@ namespace VetClinicServer.Services
             return rowsAffected > 0;
         }
     }
+
 }
