@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VetClinicServer.DTOs;
-using VetClinicServer.Exceptions;
-using VetClinicServer.Models;
 using VetClinicServer.Services;
 
 namespace VetClinicServer.Controllers
 {
     [ApiController]
     [Route("api/patients")]
-    public class PatientsController : ControllerBase
+    public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
 
-        public PatientsController(IPatientService patientService)
+        public PatientController(IPatientService patientService)
         {
             _patientService = patientService;
         }
@@ -34,7 +31,6 @@ namespace VetClinicServer.Controllers
             return Ok(patient);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> PostPatient([FromBody] PatientDTO patientDto)
         {
@@ -54,12 +50,9 @@ namespace VetClinicServer.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(int id)
         {
-            if (await _patientService.RemoveAsync(id))
-            {
-                return NoContent();
-            }
+            await _patientService.RemoveAsync(id);
 
-            return NotFound("Patient not found");
+            return NoContent();
         }
     }
 

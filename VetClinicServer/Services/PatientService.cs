@@ -63,7 +63,7 @@ namespace VetClinicServer.Services
             return patientDto;
         }
 
-        public async Task<bool> RemoveAsync(int patientId)
+        public async Task RemoveAsync(int patientId)
         {
             var patient = await _context.Patients.FindAsync(patientId);
 
@@ -73,9 +73,7 @@ namespace VetClinicServer.Services
             }
 
             _context.Remove(patient);
-            int rowsAffected = await _context.SaveChangesAsync();
-
-            return rowsAffected > 0;
+            await _context.SaveChangesAsync();
         }
     }
 }

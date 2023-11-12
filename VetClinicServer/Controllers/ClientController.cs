@@ -57,9 +57,9 @@ namespace VetClinicServer.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            if (await _clientService.RemoveAsync(id))
-                return NoContent();
-            return BadRequest();
+            await _clientService.RemoveAsync(id);
+            
+            return NoContent();
         }
     }
 }

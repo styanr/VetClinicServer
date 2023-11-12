@@ -8,6 +8,6 @@ namespace VetClinicServer.Services
         Task<T> GetByIdAsync(int id);
         Task<T> CreateAsync(T item);
         Task<T> UpdateAsync(T item);
-        Task<bool> RemoveAsync(int id);
+        Task RemoveAsync(int id);
     }
 }
