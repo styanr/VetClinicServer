@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bogus;
 using Microsoft.EntityFrameworkCore;
 
 namespace VetClinicServer.Models;
@@ -120,6 +121,23 @@ public partial class VetClinicContext : DbContext
         {
             entity.Property(e => e.RecordTypeId).ValueGeneratedNever();
         });
+
+        Randomizer.Seed = new Random(1);
+        var clientFaker = new Faker<Client>();
+
+        var id = 1;
+
+        clientFaker.RuleFor(c => c.ClientId, f => id++);
+        clientFaker.RuleFor(c => c.FirstName, f => f.Name.FirstName());
+        clientFaker.RuleFor(c => c.LastName, f => f.Name.LastName());
+        clientFaker.RuleFor(c => c.PhoneNumber, f => f.Phone.PhoneNumberFormat());
+        clientFaker.RuleFor(c => c.Email, f => f.Internet.Email());
+        clientFaker.RuleFor(c => c.PostalCode, f => f.Address.ZipCode());
+        clientFaker.RuleFor(c => c.Address, f => f.Address.FullAddress());
+
+        var fakeClients = clientFaker.Generate(10);
+
+        modelBuilder.Entity<Client>().HasData(fakeClients);
 
         OnModelCreatingPartial(modelBuilder);
     }

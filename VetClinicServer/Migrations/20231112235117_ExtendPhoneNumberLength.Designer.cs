@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VetClinicServer.Models;
 
@@ -11,9 +12,11 @@ using VetClinicServer.Models;
 namespace VetClinicServer.Migrations
 {
     [DbContext(typeof(VetClinicContext))]
-    partial class VetClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20231112235117_ExtendPhoneNumberLength")]
+    partial class ExtendPhoneNumberLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,108 +201,6 @@ namespace VetClinicServer.Migrations
                     b.HasKey("ClientId");
 
                     b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            ClientId = 1,
-                            Address = "609 Lynch Roads, Stokeston, Luxembourg",
-                            Email = "Yesenia.Parker@gmail.com",
-                            FirstName = "Delores",
-                            LastName = "Brown",
-                            PhoneNumber = "564-839-1602",
-                            PostalCode = "77901-3717"
-                        },
-                        new
-                        {
-                            ClientId = 2,
-                            Address = "21149 Terry Squares, Lake Una, Brazil",
-                            Email = "Fabiola.Pouros@gmail.com",
-                            FirstName = "Judy",
-                            LastName = "Goodwin",
-                            PhoneNumber = "934-766-4235",
-                            PostalCode = "09460-1203"
-                        },
-                        new
-                        {
-                            ClientId = 3,
-                            Address = "2471 Annetta Drive, Lake Zellaborough, Western Sahara",
-                            Email = "Aleen87@gmail.com",
-                            FirstName = "Jerad",
-                            LastName = "Hammes",
-                            PhoneNumber = "233-530-6887",
-                            PostalCode = "31134"
-                        },
-                        new
-                        {
-                            ClientId = 4,
-                            Address = "522 Ferry Burg, Lazaroville, Monaco",
-                            Email = "Arnoldo_Walsh@gmail.com",
-                            FirstName = "Macey",
-                            LastName = "Steuber",
-                            PhoneNumber = "756-910-0102",
-                            PostalCode = "18690-3271"
-                        },
-                        new
-                        {
-                            ClientId = 5,
-                            Address = "644 Gutmann Trafficway, Ewaldbury, Tanzania",
-                            Email = "Seamus73@hotmail.com",
-                            FirstName = "Marjolaine",
-                            LastName = "Haley",
-                            PhoneNumber = "419-680-3873",
-                            PostalCode = "37750-3380"
-                        },
-                        new
-                        {
-                            ClientId = 6,
-                            Address = "4993 Orn Lock, Bednarbury, Botswana",
-                            Email = "Dakota.Kiehn23@hotmail.com",
-                            FirstName = "Ephraim",
-                            LastName = "Hansen",
-                            PhoneNumber = "729-833-1094",
-                            PostalCode = "12910"
-                        },
-                        new
-                        {
-                            ClientId = 7,
-                            Address = "06446 Stephan Divide, Lake Angelicaport, Belize",
-                            Email = "Diego.Gulgowski@yahoo.com",
-                            FirstName = "Marley",
-                            LastName = "Schuster",
-                            PhoneNumber = "458-260-3462",
-                            PostalCode = "31537-1697"
-                        },
-                        new
-                        {
-                            ClientId = 8,
-                            Address = "642 Rhiannon Harbor, Waylonville, Botswana",
-                            Email = "Florence40@yahoo.com",
-                            FirstName = "Betty",
-                            LastName = "Batz",
-                            PhoneNumber = "381-566-1362",
-                            PostalCode = "14025-4197"
-                        },
-                        new
-                        {
-                            ClientId = 9,
-                            Address = "013 Fredy Pass, East Jaedenstad, Vanuatu",
-                            Email = "Silas85@gmail.com",
-                            FirstName = "Kasandra",
-                            LastName = "Langworth",
-                            PhoneNumber = "554-971-1346",
-                            PostalCode = "62837"
-                        },
-                        new
-                        {
-                            ClientId = 10,
-                            Address = "204 Jamison Rue, Jabarifurt, Turkmenistan",
-                            Email = "Hannah28@yahoo.com",
-                            FirstName = "Leola",
-                            LastName = "Glover",
-                            PhoneNumber = "237-265-2464",
-                            PostalCode = "21749-0121"
-                        });
                 });
 
             modelBuilder.Entity("VetClinicServer.Models.Doctor", b =>

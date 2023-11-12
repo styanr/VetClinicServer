@@ -22,7 +22,7 @@ public partial class Client
     public string LastName { get; set; } = null!;
 
     [Column("phoneNumber")]
-    [StringLength(20)]
+    [StringLength(40)]
     public string PhoneNumber { get; set; } = null!;
 
     [Column("email")]
