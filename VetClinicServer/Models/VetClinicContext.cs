@@ -27,8 +27,6 @@ public partial class VetClinicContext : DbContext
 
     public virtual DbSet<Doctor> Doctors { get; set; }
 
-    public virtual DbSet<DoctorSpecialization> DoctorSpecializations { get; set; }
-
     public virtual DbSet<MedicalRecord> MedicalRecords { get; set; }
 
     public virtual DbSet<Medication> Medications { get; set; }
@@ -88,14 +86,7 @@ public partial class VetClinicContext : DbContext
 
         modelBuilder.Entity<Doctor>(entity =>
         {
-            entity.HasOne(d => d.Specialization).WithMany(p => p.Doctors)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Doctors_DoctorSpecializations");
-        });
-
-        modelBuilder.Entity<DoctorSpecialization>(entity =>
-        {
-            entity.Property(e => e.SpecializationId).ValueGeneratedNever();
+            entity.Property(e => e.Specialization).HasConversion<int>();
         });
 
         modelBuilder.Entity<MedicalRecord>(entity =>

@@ -25,7 +25,7 @@ namespace VetClinicServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
         {
-            var clients = await _clientService.GetAllClients();
+            var clients = await _clientService.GetAllAsync();
 
             return Ok(clients);
         }
@@ -33,7 +33,7 @@ namespace VetClinicServer.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ClientDTO>> GetClient(int id)
         {
-            var client = await _clientService.GetClientById(id);
+            var client = await _clientService.GetByIdAsync(id);
             
             return Ok(client);
         }
@@ -41,7 +41,7 @@ namespace VetClinicServer.Controllers
         [HttpPost]
         public async Task<ActionResult<ClientDTO>> PostClient([FromBody] ClientDTO clientDto)
         {
-            clientDto = await _clientService.CreateClient(clientDto);
+            clientDto = await _clientService.CreateAsync(clientDto);
             
             return CreatedAtAction(nameof(GetClient), new { id = clientDto.ClientId }, clientDto);
         }
@@ -49,7 +49,7 @@ namespace VetClinicServer.Controllers
         [HttpPut]
         public async Task<ActionResult<ClientDTO>> Put([FromBody] ClientDTO clientDto)
         {
-            await _clientService.UpdateClient(clientDto);
+            await _clientService.UpdateAsync(clientDto);
             
             return NoContent();
         }
@@ -57,7 +57,7 @@ namespace VetClinicServer.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            if (await _clientService.RemoveClient(id))
+            if (await _clientService.RemoveAsync(id))
                 return NoContent();
             return BadRequest();
         }

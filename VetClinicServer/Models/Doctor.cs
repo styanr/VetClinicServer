@@ -6,6 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VetClinicServer.Models;
 
+public enum DoctorSpecialization
+{
+    Surgery,
+    Cardiology,
+    Anesthesiology
+}
+
 public partial class Doctor
 {
     [Key]
@@ -28,9 +35,6 @@ public partial class Doctor
     [StringLength(200)]
     public string Address { get; set; } = null!;
 
-    [Column("specializationId")]
-    public int SpecializationId { get; set; }
-
     [InverseProperty("Doctor")]
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
@@ -40,7 +44,5 @@ public partial class Doctor
     [InverseProperty("Doctor")]
     public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
 
-    [ForeignKey("SpecializationId")]
-    [InverseProperty("Doctors")]
-    public virtual DoctorSpecialization Specialization { get; set; } = null!;
+    public virtual DoctorSpecialization Specialization { get; set; }
 }

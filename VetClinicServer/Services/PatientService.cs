@@ -10,21 +10,19 @@ namespace VetClinicServer.Services
     {
         private readonly VetClinicContext _context;
         private readonly IMapper _mapper;
-        private readonly IClientService _clientService;
 
-        public PatientService(VetClinicContext context, IMapper mapper, IClientService clientService)
+        public PatientService(VetClinicContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _clientService = clientService;
         }
 
-        public async Task<IEnumerable<PatientDTO>> GetAllPatients()
+        public async Task<IEnumerable<PatientDTO>> GetAllAsync()
         {
             return await _mapper.ProjectTo<PatientDTO>(_context.Patients).ToListAsync();
         }
 
-        public async Task<PatientDTO> GetPatientById(int patientId)
+        public async Task<PatientDTO> GetByIdAsync(int patientId)
         {
             if (patientId < 0)
             {
@@ -40,7 +38,7 @@ namespace VetClinicServer.Services
             return _mapper.Map<Patient, PatientDTO>(patient);
         }
 
-        public async Task<PatientDTO> CreatePatient(PatientDTO patientDto)
+        public async Task<PatientDTO> CreateAsync(PatientDTO patientDto)
         {
             var patient = _mapper.Map<PatientDTO, Patient>(patientDto);
             _context.Patients.Add(patient);
@@ -51,7 +49,7 @@ namespace VetClinicServer.Services
             return patientDto;
         }
 
-        public async Task<PatientDTO> UpdatePatient(PatientDTO patientDto)
+        public async Task<PatientDTO> UpdateAsync(PatientDTO patientDto)
         {
             var pt = await _context.Patients.FindAsync(patientDto.PatientId);
             if (pt == null)
@@ -65,7 +63,7 @@ namespace VetClinicServer.Services
             return patientDto;
         }
 
-        public async Task<bool> RemovePatient(int patientId)
+        public async Task<bool> RemoveAsync(int patientId)
         {
             var patient = await _context.Patients.FindAsync(patientId);
 

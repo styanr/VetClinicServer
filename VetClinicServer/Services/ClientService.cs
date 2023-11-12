@@ -17,12 +17,12 @@ namespace VetClinicServer.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ClientDTO>> GetAllClients()
+        public async Task<IEnumerable<ClientDTO>> GetAllAsync()
         {
             return await _mapper.ProjectTo<ClientDTO>(_context.Clients).ToListAsync();
         }
 
-        public async Task<ClientDTO> GetClientById(int clientId)
+        public async Task<ClientDTO> GetByIdAsync(int clientId)
         {
             if (clientId <= 0)
             {
@@ -38,7 +38,7 @@ namespace VetClinicServer.Services
             return _mapper.Map<Client, ClientDTO>(client);
         }
 
-        public async Task<ClientDTO> CreateClient(ClientDTO clientDto)
+        public async Task<ClientDTO> CreateAsync(ClientDTO clientDto)
         {
             var client = _mapper.Map<ClientDTO, Client>(clientDto);
             _context.Clients.Add(client);
@@ -49,7 +49,7 @@ namespace VetClinicServer.Services
             return clientDto;
         }
 
-        public async Task<ClientDTO> UpdateClient(ClientDTO clientDto)
+        public async Task<ClientDTO> UpdateAsync(ClientDTO clientDto)
         {
             var cl = await _context.Clients.FindAsync(clientDto.ClientId);
             if (cl == null)
@@ -63,7 +63,7 @@ namespace VetClinicServer.Services
             return clientDto;
         }
 
-        public async Task<bool> RemoveClient(int clientId)
+        public async Task<bool> RemoveAsync(int clientId)
         {
             var client = await _context.Clients.FindAsync(clientId);
 
