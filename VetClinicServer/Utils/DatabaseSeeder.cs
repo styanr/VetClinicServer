@@ -8,12 +8,14 @@ namespace VetClinicServer.Utils
         public IReadOnlyCollection<Client> Clients { get; set; }
         public IReadOnlyCollection<Patient> Patients { get; set; }
         public IReadOnlyCollection<Doctor> Doctors { get; set; }
+        public IReadOnlyCollection<Appointment> Appointments { get; set; }
 
-        public DatabaseSeeder(int clientAmt, int patientAmt, int doctorAmt)
+        public DatabaseSeeder(int clientAmt, int patientAmt, int doctorAmt, int appointmentAmt)
         {
             Clients = GenerateClients(clientAmt);
             Patients = GeneratePatients(patientAmt, clientAmt);
             Doctors = GenerateDoctors(doctorAmt);
+            Appointments = GenerateAppointments(appointmentAmt, doctorAmt, patientAmt);
         }
 
         private static IReadOnlyCollection<Client> GenerateClients(int amt)
@@ -48,7 +50,8 @@ namespace VetClinicServer.Utils
             ));
 
             patientFaker.RuleFor(p => p.Name, f => f.Name.FirstName());
-            patientFaker.RuleFor(p => p.DateOfBirth, f => f.Date.Past(10));
+            patientFaker.RuleFor(p => p.DateOfBirth, f => f.Date.Past(10,
+                refDate: new DateTime(2023, 11, 13)));
             patientFaker.RuleFor(p => p.ClientId, f => f.Random.Number(1, clientAmt));
             
             return patientFaker.Generate(amt);
@@ -68,5 +71,20 @@ namespace VetClinicServer.Utils
 
             return doctorFaker.Generate(amt);
         }
+
+        private static IReadOnlyCollection<Appointment> GenerateAppointments(int amt, int doctorAmt, int patientAmt)
+        {
+            int id = 1;
+            var appointmentFaker = new Faker<Appointment>();
+
+            appointmentFaker.RuleFor(a => a.AppointmentId, f => id++);
+            appointmentFaker.RuleFor(a => a.Date, f => f.Date.Future(1, refDate: new DateTime(2023, 11, 13)));
+            appointmentFaker.RuleFor(a => a.DoctorId, f => f.Random.Number(1, doctorAmt));
+            appointmentFaker.RuleFor(a => a.PatientId, f => f.Random.Number(1, patientAmt));
+            appointmentFaker.RuleFor(a => a.Type, f => f.PickRandom<AppointmentType>());
+
+            return appointmentFaker.Generate(amt);
+        }
+
     }
 }

@@ -11,6 +11,7 @@ namespace VetClinicServer.DTOs
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+
         [Required(ErrorMessage = "Phone number is required")]
         [Phone(ErrorMessage = "Invalid Phone Number")]
         public string PhoneNumber { get; set; }

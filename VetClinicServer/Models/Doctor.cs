@@ -44,5 +44,6 @@ public partial class Doctor
     [InverseProperty("Doctor")]
     public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
 
+    [Column("specialization")]
     public virtual DoctorSpecialization Specialization { get; set; }
 }

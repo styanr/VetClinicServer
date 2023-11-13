@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VetClinicServer.Models;
 
@@ -11,9 +12,11 @@ using VetClinicServer.Models;
 namespace VetClinicServer.Migrations
 {
     [DbContext(typeof(VetClinicContext))]
-    partial class VetClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20231113180952_RemoveAppointmentTypeTable")]
+    partial class RemoveAppointmentTypeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,56 +73,6 @@ namespace VetClinicServer.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
-
-                    b.HasData(
-                        new
-                        {
-                            AppointmentId = 1,
-                            Date = new DateTime(2024, 6, 29, 23, 33, 16, 788, DateTimeKind.Unspecified).AddTicks(957),
-                            DoctorId = 3,
-                            PatientId = 3,
-                            Type = 5
-                        },
-                        new
-                        {
-                            AppointmentId = 2,
-                            Date = new DateTime(2024, 5, 13, 3, 6, 50, 526, DateTimeKind.Unspecified).AddTicks(6862),
-                            DoctorId = 4,
-                            PatientId = 13,
-                            Type = 3
-                        },
-                        new
-                        {
-                            AppointmentId = 3,
-                            Date = new DateTime(2024, 9, 2, 15, 3, 54, 594, DateTimeKind.Unspecified).AddTicks(6892),
-                            DoctorId = 1,
-                            PatientId = 14,
-                            Type = 5
-                        },
-                        new
-                        {
-                            AppointmentId = 4,
-                            Date = new DateTime(2023, 11, 25, 11, 42, 48, 200, DateTimeKind.Unspecified).AddTicks(2651),
-                            DoctorId = 4,
-                            PatientId = 8,
-                            Type = 4
-                        },
-                        new
-                        {
-                            AppointmentId = 5,
-                            Date = new DateTime(2024, 4, 7, 1, 13, 34, 209, DateTimeKind.Unspecified).AddTicks(4126),
-                            DoctorId = 10,
-                            PatientId = 15,
-                            Type = 6
-                        },
-                        new
-                        {
-                            AppointmentId = 6,
-                            Date = new DateTime(2024, 3, 2, 4, 57, 29, 255, DateTimeKind.Unspecified).AddTicks(1946),
-                            DoctorId = 3,
-                            PatientId = 9,
-                            Type = 6
-                        });
                 });
 
             modelBuilder.Entity("VetClinicServer.Models.Bill", b =>
@@ -870,7 +823,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 1,
                             Breed = "Angora",
                             ClientId = 10,
-                            DateOfBirth = new DateTime(2018, 3, 26, 14, 43, 47, 835, DateTimeKind.Unspecified).AddTicks(7544),
+                            DateOfBirth = new DateTime(2018, 3, 27, 10, 53, 39, 986, DateTimeKind.Local).AddTicks(1761),
                             Name = "Arlene",
                             Species = "Bird"
                         },
@@ -879,7 +832,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 2,
                             Breed = "Poodle",
                             ClientId = 21,
-                            DateOfBirth = new DateTime(2015, 2, 15, 2, 19, 33, 831, DateTimeKind.Unspecified).AddTicks(8318),
+                            DateOfBirth = new DateTime(2015, 2, 15, 22, 29, 25, 982, DateTimeKind.Local).AddTicks(3737),
                             Name = "Maya",
                             Species = "Dog"
                         },
@@ -888,7 +841,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 3,
                             Breed = "Cockatiel",
                             ClientId = 15,
-                            DateOfBirth = new DateTime(2017, 5, 6, 8, 55, 56, 123, DateTimeKind.Unspecified).AddTicks(4058),
+                            DateOfBirth = new DateTime(2017, 5, 7, 5, 5, 48, 273, DateTimeKind.Local).AddTicks(9509),
                             Name = "Jeremy",
                             Species = "Dog"
                         },
@@ -897,7 +850,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 4,
                             Breed = "Angora",
                             ClientId = 22,
-                            DateOfBirth = new DateTime(2021, 9, 16, 20, 8, 15, 550, DateTimeKind.Unspecified).AddTicks(3265),
+                            DateOfBirth = new DateTime(2021, 9, 17, 16, 18, 7, 700, DateTimeKind.Local).AddTicks(8735),
                             Name = "Burley",
                             Species = "Rabbit"
                         },
@@ -906,7 +859,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 5,
                             Breed = "Lionhead",
                             ClientId = 9,
-                            DateOfBirth = new DateTime(2020, 10, 26, 2, 39, 43, 305, DateTimeKind.Unspecified).AddTicks(2158),
+                            DateOfBirth = new DateTime(2020, 10, 26, 22, 49, 35, 455, DateTimeKind.Local).AddTicks(7647),
                             Name = "Casey",
                             Species = "Hamster"
                         },
@@ -915,7 +868,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 6,
                             Breed = "Maine Coon",
                             ClientId = 19,
-                            DateOfBirth = new DateTime(2022, 8, 17, 2, 58, 0, 107, DateTimeKind.Unspecified).AddTicks(4748),
+                            DateOfBirth = new DateTime(2022, 8, 17, 23, 7, 52, 258, DateTimeKind.Local).AddTicks(255),
                             Name = "Ernest",
                             Species = "Cat"
                         },
@@ -924,7 +877,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 7,
                             Breed = "Maine Coon",
                             ClientId = 26,
-                            DateOfBirth = new DateTime(2023, 1, 30, 1, 4, 13, 814, DateTimeKind.Unspecified).AddTicks(4234),
+                            DateOfBirth = new DateTime(2023, 1, 30, 21, 14, 5, 964, DateTimeKind.Local).AddTicks(9759),
                             Name = "Brain",
                             Species = "Bird"
                         },
@@ -933,7 +886,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 8,
                             Breed = "Poodle",
                             ClientId = 9,
-                            DateOfBirth = new DateTime(2021, 2, 23, 16, 16, 38, 721, DateTimeKind.Unspecified).AddTicks(2111),
+                            DateOfBirth = new DateTime(2021, 2, 24, 12, 26, 30, 871, DateTimeKind.Local).AddTicks(7682),
                             Name = "Jeramy",
                             Species = "Rabbit"
                         },
@@ -942,7 +895,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 9,
                             Breed = "Beagle",
                             ClientId = 25,
-                            DateOfBirth = new DateTime(2015, 5, 12, 5, 18, 37, 904, DateTimeKind.Unspecified).AddTicks(4798),
+                            DateOfBirth = new DateTime(2015, 5, 13, 1, 28, 30, 55, DateTimeKind.Local).AddTicks(387),
                             Name = "Harmony",
                             Species = "Rabbit"
                         },
@@ -951,7 +904,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 10,
                             Breed = "Poodle",
                             ClientId = 11,
-                            DateOfBirth = new DateTime(2020, 3, 16, 21, 34, 34, 356, DateTimeKind.Unspecified).AddTicks(7188),
+                            DateOfBirth = new DateTime(2020, 3, 17, 17, 44, 26, 507, DateTimeKind.Local).AddTicks(2794),
                             Name = "Wilson",
                             Species = "Bird"
                         },
@@ -960,7 +913,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 11,
                             Breed = "Finch",
                             ClientId = 12,
-                            DateOfBirth = new DateTime(2015, 1, 11, 2, 12, 0, 58, DateTimeKind.Unspecified).AddTicks(5938),
+                            DateOfBirth = new DateTime(2015, 1, 11, 22, 21, 52, 209, DateTimeKind.Local).AddTicks(1563),
                             Name = "Alfred",
                             Species = "Cat"
                         },
@@ -969,7 +922,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 12,
                             Breed = "Finch",
                             ClientId = 28,
-                            DateOfBirth = new DateTime(2020, 11, 26, 9, 54, 52, 757, DateTimeKind.Unspecified).AddTicks(9361),
+                            DateOfBirth = new DateTime(2020, 11, 27, 6, 4, 44, 908, DateTimeKind.Local).AddTicks(5003),
                             Name = "Opal",
                             Species = "Hamster"
                         },
@@ -978,7 +931,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 13,
                             Breed = "Syrian",
                             ClientId = 4,
-                            DateOfBirth = new DateTime(2021, 3, 26, 18, 20, 4, 833, DateTimeKind.Unspecified).AddTicks(9704),
+                            DateOfBirth = new DateTime(2021, 3, 27, 14, 29, 56, 984, DateTimeKind.Local).AddTicks(5363),
                             Name = "Kirstin",
                             Species = "Rabbit"
                         },
@@ -987,7 +940,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 14,
                             Breed = "Parrot",
                             ClientId = 25,
-                            DateOfBirth = new DateTime(2015, 12, 20, 19, 15, 12, 655, DateTimeKind.Unspecified).AddTicks(1370),
+                            DateOfBirth = new DateTime(2015, 12, 21, 15, 25, 4, 805, DateTimeKind.Local).AddTicks(7046),
                             Name = "Hassan",
                             Species = "Rabbit"
                         },
@@ -996,7 +949,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 15,
                             Breed = "Bulldog",
                             ClientId = 3,
-                            DateOfBirth = new DateTime(2014, 7, 20, 12, 30, 10, 149, DateTimeKind.Unspecified).AddTicks(9692),
+                            DateOfBirth = new DateTime(2014, 7, 21, 8, 40, 2, 300, DateTimeKind.Local).AddTicks(5385),
                             Name = "Schuyler",
                             Species = "Bird"
                         },
@@ -1005,7 +958,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 16,
                             Breed = "Persian",
                             ClientId = 26,
-                            DateOfBirth = new DateTime(2018, 12, 23, 10, 57, 9, 991, DateTimeKind.Unspecified).AddTicks(9819),
+                            DateOfBirth = new DateTime(2018, 12, 24, 7, 7, 2, 142, DateTimeKind.Local).AddTicks(5530),
                             Name = "Elyssa",
                             Species = "Rabbit"
                         },
@@ -1014,7 +967,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 17,
                             Breed = "Maine Coon",
                             ClientId = 11,
-                            DateOfBirth = new DateTime(2016, 4, 6, 11, 19, 25, 288, DateTimeKind.Unspecified).AddTicks(7430),
+                            DateOfBirth = new DateTime(2016, 4, 7, 7, 29, 17, 439, DateTimeKind.Local).AddTicks(3158),
                             Name = "Vincent",
                             Species = "Cat"
                         },
@@ -1023,7 +976,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 18,
                             Breed = "Maine Coon",
                             ClientId = 30,
-                            DateOfBirth = new DateTime(2016, 12, 18, 19, 23, 52, 156, DateTimeKind.Unspecified).AddTicks(3226),
+                            DateOfBirth = new DateTime(2016, 12, 19, 15, 33, 44, 306, DateTimeKind.Local).AddTicks(8971),
                             Name = "Deangelo",
                             Species = "Dog"
                         },
@@ -1032,7 +985,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 19,
                             Breed = "Sphynx",
                             ClientId = 15,
-                            DateOfBirth = new DateTime(2020, 4, 27, 7, 19, 48, 682, DateTimeKind.Unspecified).AddTicks(8292),
+                            DateOfBirth = new DateTime(2020, 4, 28, 3, 29, 40, 833, DateTimeKind.Local).AddTicks(4053),
                             Name = "Clifton",
                             Species = "Dog"
                         },
@@ -1041,7 +994,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 20,
                             Breed = "Cockatiel",
                             ClientId = 4,
-                            DateOfBirth = new DateTime(2016, 9, 2, 6, 47, 40, 23, DateTimeKind.Unspecified).AddTicks(6053),
+                            DateOfBirth = new DateTime(2016, 9, 3, 2, 57, 32, 174, DateTimeKind.Local).AddTicks(1831),
                             Name = "Camila",
                             Species = "Rabbit"
                         },
@@ -1050,7 +1003,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 21,
                             Breed = "Dutch",
                             ClientId = 24,
-                            DateOfBirth = new DateTime(2018, 7, 10, 1, 31, 13, 562, DateTimeKind.Unspecified).AddTicks(1060),
+                            DateOfBirth = new DateTime(2018, 7, 10, 21, 41, 5, 712, DateTimeKind.Local).AddTicks(6893),
                             Name = "Clementine",
                             Species = "Hamster"
                         },
@@ -1059,7 +1012,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 22,
                             Breed = "Lionhead",
                             ClientId = 19,
-                            DateOfBirth = new DateTime(2015, 11, 14, 21, 35, 14, 67, DateTimeKind.Unspecified).AddTicks(1451),
+                            DateOfBirth = new DateTime(2015, 11, 15, 17, 45, 6, 217, DateTimeKind.Local).AddTicks(7302),
                             Name = "Bella",
                             Species = "Dog"
                         },
@@ -1068,7 +1021,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 23,
                             Breed = "Bulldog",
                             ClientId = 20,
-                            DateOfBirth = new DateTime(2019, 6, 22, 6, 50, 22, 804, DateTimeKind.Unspecified).AddTicks(5772),
+                            DateOfBirth = new DateTime(2019, 6, 23, 3, 0, 14, 955, DateTimeKind.Local).AddTicks(1640),
                             Name = "Edison",
                             Species = "Rabbit"
                         },
@@ -1077,7 +1030,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 24,
                             Breed = "Dwarf",
                             ClientId = 3,
-                            DateOfBirth = new DateTime(2014, 9, 21, 1, 37, 5, 159, DateTimeKind.Unspecified).AddTicks(3140),
+                            DateOfBirth = new DateTime(2014, 9, 21, 21, 46, 57, 309, DateTimeKind.Local).AddTicks(9026),
                             Name = "Reagan",
                             Species = "Bird"
                         },
@@ -1086,7 +1039,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 25,
                             Breed = "Bulldog",
                             ClientId = 21,
-                            DateOfBirth = new DateTime(2015, 10, 8, 5, 31, 35, 619, DateTimeKind.Unspecified).AddTicks(7146),
+                            DateOfBirth = new DateTime(2015, 10, 9, 1, 41, 27, 770, DateTimeKind.Local).AddTicks(3049),
                             Name = "Mohammad",
                             Species = "Bird"
                         },
@@ -1095,7 +1048,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 26,
                             Breed = "Winter White",
                             ClientId = 9,
-                            DateOfBirth = new DateTime(2019, 6, 5, 1, 49, 35, 233, DateTimeKind.Unspecified).AddTicks(4596),
+                            DateOfBirth = new DateTime(2019, 6, 5, 21, 59, 27, 384, DateTimeKind.Local).AddTicks(517),
                             Name = "Joshuah",
                             Species = "Cat"
                         },
@@ -1104,7 +1057,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 27,
                             Breed = "German Shepherd",
                             ClientId = 27,
-                            DateOfBirth = new DateTime(2020, 2, 26, 23, 47, 58, 893, DateTimeKind.Unspecified).AddTicks(278),
+                            DateOfBirth = new DateTime(2020, 2, 27, 19, 57, 51, 43, DateTimeKind.Local).AddTicks(6216),
                             Name = "Laurel",
                             Species = "Cat"
                         },
@@ -1113,7 +1066,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 28,
                             Breed = "Poodle",
                             ClientId = 9,
-                            DateOfBirth = new DateTime(2013, 12, 10, 13, 39, 27, 91, DateTimeKind.Unspecified).AddTicks(126),
+                            DateOfBirth = new DateTime(2013, 12, 11, 9, 49, 19, 241, DateTimeKind.Local).AddTicks(6082),
                             Name = "Hilbert",
                             Species = "Bird"
                         },
@@ -1122,7 +1075,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 29,
                             Breed = "Bulldog",
                             ClientId = 10,
-                            DateOfBirth = new DateTime(2022, 12, 25, 11, 38, 28, 629, DateTimeKind.Unspecified).AddTicks(7156),
+                            DateOfBirth = new DateTime(2022, 12, 26, 7, 48, 20, 780, DateTimeKind.Local).AddTicks(3129),
                             Name = "Iliana",
                             Species = "Bird"
                         },
@@ -1131,7 +1084,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 30,
                             Breed = "Beagle",
                             ClientId = 1,
-                            DateOfBirth = new DateTime(2016, 11, 3, 11, 28, 2, 123, DateTimeKind.Unspecified).AddTicks(8799),
+                            DateOfBirth = new DateTime(2016, 11, 4, 7, 37, 54, 274, DateTimeKind.Local).AddTicks(4790),
                             Name = "Nikko",
                             Species = "Hamster"
                         },
@@ -1140,7 +1093,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 31,
                             Breed = "Dutch",
                             ClientId = 22,
-                            DateOfBirth = new DateTime(2017, 5, 6, 0, 59, 4, 316, DateTimeKind.Unspecified).AddTicks(8865),
+                            DateOfBirth = new DateTime(2017, 5, 6, 21, 8, 56, 467, DateTimeKind.Local).AddTicks(4873),
                             Name = "Darryl",
                             Species = "Hamster"
                         },
@@ -1149,7 +1102,7 @@ namespace VetClinicServer.Migrations
                             PatientId = 32,
                             Breed = "Winter White",
                             ClientId = 17,
-                            DateOfBirth = new DateTime(2015, 6, 29, 3, 20, 6, 445, DateTimeKind.Unspecified).AddTicks(3226),
+                            DateOfBirth = new DateTime(2015, 6, 29, 23, 29, 58, 595, DateTimeKind.Local).AddTicks(9252),
                             Name = "Gerard",
                             Species = "Hamster"
                         });

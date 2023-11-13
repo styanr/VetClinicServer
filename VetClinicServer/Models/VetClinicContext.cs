@@ -19,8 +19,6 @@ public partial class VetClinicContext : DbContext
 
     public virtual DbSet<Appointment> Appointments { get; set; }
 
-    public virtual DbSet<AppointmentType> AppointmentTypes { get; set; }
-
     public virtual DbSet<Bill> Bills { get; set; }
 
     public virtual DbSet<BillStatus> BillStatuses { get; set; }
@@ -55,14 +53,8 @@ public partial class VetClinicContext : DbContext
             entity.HasOne(d => d.Patient).WithMany(p => p.Appointments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Appointments_Patients");
-
-            entity.HasOne(d => d.Type).WithMany(p => p.Appointments).HasConstraintName("FK_Appointments_AppointmentTypes");
         });
 
-        modelBuilder.Entity<AppointmentType>(entity =>
-        {
-            entity.Property(e => e.AppointmentTypeId).ValueGeneratedNever();
-        });
 
         modelBuilder.Entity<Bill>(entity =>
         {
@@ -125,11 +117,12 @@ public partial class VetClinicContext : DbContext
 
         Randomizer.Seed = new Random(1);
 
-        var seeder = new DatabaseSeeder(30, 32, 20);
+        var seeder = new DatabaseSeeder(30, 32, 20, 6);
 
         modelBuilder.Entity<Client>().HasData(seeder.Clients);
         modelBuilder.Entity<Patient>().HasData(seeder.Patients);
         modelBuilder.Entity<Doctor>().HasData(seeder.Doctors);
+        modelBuilder.Entity<Appointment>().HasData(seeder.Appointments);
         
 
         OnModelCreatingPartial(modelBuilder);

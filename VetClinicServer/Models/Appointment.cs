@@ -6,6 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VetClinicServer.Models;
 
+public enum AppointmentType
+{
+    Consultation,
+    Examination,
+    Vaccination,
+    Surgery,
+    FollowUp,
+    Diagnostic,
+    Therapy,
+    Emergency,
+    RoutineCheckup
+}
+
 public partial class Appointment
 {
     [Key]
@@ -21,9 +34,6 @@ public partial class Appointment
     [Column("patientId")]
     public int PatientId { get; set; }
 
-    [Column("typeId")]
-    public int? TypeId { get; set; }
-
     [ForeignKey("DoctorId")]
     [InverseProperty("Appointments")]
     public virtual Doctor Doctor { get; set; } = null!;
@@ -32,7 +42,6 @@ public partial class Appointment
     [InverseProperty("Appointments")]
     public virtual Patient Patient { get; set; } = null!;
 
-    [ForeignKey("TypeId")]
-    [InverseProperty("Appointments")]
-    public virtual AppointmentType? Type { get; set; }
+    [Column("appointmentType")]
+    public AppointmentType? Type { get; set; }
 }

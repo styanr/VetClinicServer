@@ -1,21 +1,14 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using VetClinicServer.DTOs;
-using VetClinicServer.Exceptions;
 using VetClinicServer.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace VetClinicServer.Controllers
 {
-    [Route("api/clients")]
     [ApiController]
+    [Route("api/clients")]
     public class ClientController : ControllerBase
     {
         private readonly IClientService _clientService;
-
 
         public ClientController(IClientService clientService)
         {
