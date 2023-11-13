@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using VetClinicServer.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.Text.Json.Serialization;
 
 namespace VetClinicServer.DTOs
 {
@@ -23,7 +25,7 @@ namespace VetClinicServer.DTOs
         public string Address { get; set; } = null!;
         
         [Required]
-        public int Specialization { get; set; }
+        public DoctorSpecialization Specialization { get; set; }
 
     }
 }

@@ -1,5 +1,7 @@
 
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Options;
+using System.Text.Json.Serialization;
 using VetClinicServer.Filters;
 using VetClinicServer.Models;
 using VetClinicServer.Services;
@@ -18,10 +20,18 @@ namespace VetClinicServer
             builder.Services.AddControllers(c =>
             {
                 c.Filters.Add<CustomExceptionFilter>();
+            })
+            .AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+                o.JsonSerializerOptions.DefaultIgnoreCondition =
+                    JsonIgnoreCondition.WhenWritingNull;
             });
 
             builder.Services.AddScoped<IClientService, ClientService>();
             builder.Services.AddScoped<IPatientService, PatientService>();
+            builder.Services.AddScoped<IDoctorService, DoctorService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

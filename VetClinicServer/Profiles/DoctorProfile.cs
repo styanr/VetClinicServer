@@ -8,7 +8,7 @@ namespace VetClinicServer.Profiles
     {
         public DoctorProfile()
         {
-            CreateMap<Doctor, DoctorDTO>().ReverseMap();
+            CreateMap<Doctor, DoctorDTO>();
         }
     }
 }

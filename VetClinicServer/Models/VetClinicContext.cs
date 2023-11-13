@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
+using VetClinicServer.Utils;
 
 namespace VetClinicServer.Models;
 
@@ -123,21 +124,13 @@ public partial class VetClinicContext : DbContext
         });
 
         Randomizer.Seed = new Random(1);
-        var clientFaker = new Faker<Client>();
 
-        var id = 1;
+        var seeder = new DatabaseSeeder(30, 32, 20);
 
-        clientFaker.RuleFor(c => c.ClientId, f => id++);
-        clientFaker.RuleFor(c => c.FirstName, f => f.Name.FirstName());
-        clientFaker.RuleFor(c => c.LastName, f => f.Name.LastName());
-        clientFaker.RuleFor(c => c.PhoneNumber, f => f.Phone.PhoneNumberFormat());
-        clientFaker.RuleFor(c => c.Email, f => f.Internet.Email());
-        clientFaker.RuleFor(c => c.PostalCode, f => f.Address.ZipCode());
-        clientFaker.RuleFor(c => c.Address, f => f.Address.FullAddress());
-
-        var fakeClients = clientFaker.Generate(10);
-
-        modelBuilder.Entity<Client>().HasData(fakeClients);
+        modelBuilder.Entity<Client>().HasData(seeder.Clients);
+        modelBuilder.Entity<Patient>().HasData(seeder.Patients);
+        modelBuilder.Entity<Doctor>().HasData(seeder.Doctors);
+        
 
         OnModelCreatingPartial(modelBuilder);
     }
