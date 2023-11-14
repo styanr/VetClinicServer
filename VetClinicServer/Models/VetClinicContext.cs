@@ -117,12 +117,14 @@ public partial class VetClinicContext : DbContext
 
         Randomizer.Seed = new Random(1);
 
-        var seeder = new DatabaseSeeder(30, 32, 20, 6);
+        var seeder = new DatabaseSeeder(30, 32, 20, 6, 30);
 
         modelBuilder.Entity<Client>().HasData(seeder.Clients);
         modelBuilder.Entity<Patient>().HasData(seeder.Patients);
         modelBuilder.Entity<Doctor>().HasData(seeder.Doctors);
         modelBuilder.Entity<Appointment>().HasData(seeder.Appointments);
+        modelBuilder.Entity<Medication>().HasData(seeder.Medications);
+
         
 
         OnModelCreatingPartial(modelBuilder);

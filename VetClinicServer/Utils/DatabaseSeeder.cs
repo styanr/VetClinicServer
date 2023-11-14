@@ -9,13 +9,17 @@ namespace VetClinicServer.Utils
         public IReadOnlyCollection<Patient> Patients { get; set; }
         public IReadOnlyCollection<Doctor> Doctors { get; set; }
         public IReadOnlyCollection<Appointment> Appointments { get; set; }
+        public IReadOnlyCollection<Medication> Medications { get; set; }
 
-        public DatabaseSeeder(int clientAmt, int patientAmt, int doctorAmt, int appointmentAmt)
+        public DatabaseSeeder(int clientAmt, int patientAmt, int doctorAmt, int appointmentAmt, int medicationAmt)
         {
+            Randomizer.Seed = new Random(1111);
+
             Clients = GenerateClients(clientAmt);
             Patients = GeneratePatients(patientAmt, clientAmt);
             Doctors = GenerateDoctors(doctorAmt);
             Appointments = GenerateAppointments(appointmentAmt, doctorAmt, patientAmt);
+            Medications = GenerateMedications(medicationAmt);
         }
 
         private static IReadOnlyCollection<Client> GenerateClients(int amt)
@@ -86,5 +90,18 @@ namespace VetClinicServer.Utils
             return appointmentFaker.Generate(amt);
         }
 
+        private static IReadOnlyCollection<Medication> GenerateMedications(int amt)
+        {
+            int id = 1;
+            var medicationFaker = new Faker<Medication>();
+
+            medicationFaker.RuleFor(m => m.MedicationId, f => id++);
+            medicationFaker.RuleFor(m => m.Name, f => f.Commerce.ProductName());
+            medicationFaker.RuleFor(m => m.Description, f => f.Lorem.Paragraph());
+            medicationFaker.RuleFor(m => m.Quantity, f => f.Random.Number(1, 100));
+            medicationFaker.RuleFor(m => m.Price, f => f.Random.Decimal(1, 100));
+
+            return medicationFaker.Generate(amt);
+        }
     }
 }

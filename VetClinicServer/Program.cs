@@ -33,6 +33,8 @@ namespace VetClinicServer
             builder.Services.AddScoped<IPatientService, PatientService>();
             builder.Services.AddScoped<IDoctorService, DoctorService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+            builder.Services.AddScoped<IMedicationService, MedicationService>();
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

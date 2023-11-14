@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VetClinicServer.Models;
 
@@ -11,9 +12,11 @@ using VetClinicServer.Models;
 namespace VetClinicServer.Migrations
 {
     [DbContext(typeof(VetClinicContext))]
-    partial class VetClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20231114142508_SeedMedicationData")]
+    partial class SeedMedicationData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
