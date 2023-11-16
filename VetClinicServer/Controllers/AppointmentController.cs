@@ -17,6 +17,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Get all appointments")]
         public async Task<ActionResult<IEnumerable<AppointmentDTO>>> GetAppointments()
         {
             var appointments = await _appointmentService.GetAllAsync();
@@ -25,6 +26,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get appointment by id")]
         public async Task<ActionResult<AppointmentDTO>> GetAppointment(int id)
         {
             var appointment = await _appointmentService.GetByIdAsync(id);
@@ -33,6 +35,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Create new appointment")]
         public async Task<ActionResult<AppointmentDTO>> PostAppointment([FromBody] AppointmentDTO appointmentDto)
         {
             appointmentDto = await _appointmentService.CreateAsync(appointmentDto);
@@ -41,6 +44,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPut]
+        [SwaggerOperation(Summary = "Update appointment")]
         public async Task<ActionResult<AppointmentDTO>> Put([FromBody] AppointmentDTO appointmentDto)
         {
             await _appointmentService.UpdateAsync(appointmentDto);
@@ -50,7 +54,8 @@ namespace VetClinicServer.Controllers
 
         [HttpGet]
         [Route("/api/doctors/{id}/appointments")]
-        [SwaggerOperation(Tags = new[] { "Doctor" })]
+        [SwaggerOperation(Tags = new[] { "Doctor" }, 
+            Summary = "Get appointments for doctor")]
         public async Task<ActionResult<IEnumerable<AppointmentDTO>>> GetForDoctor(int id)
         {
             var appointments = await _appointmentService.GetForDoctorAsync(id);
@@ -60,7 +65,8 @@ namespace VetClinicServer.Controllers
 
         [HttpGet]
         [Route("/api/patients/{id}/appointments")]
-        [SwaggerOperation(Tags = new[] { "Patient" })]
+        [SwaggerOperation(Tags = new[] { "Patient" },
+            Summary = "Get appointments for patient")]
         public async Task<ActionResult<IEnumerable<AppointmentDTO>>> GetForPatient(int id)
         {
             var appointments = await _appointmentService.GetForPatientAsync(id);
@@ -69,6 +75,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete appointment")]
         public async Task<ActionResult> Delete(int id)
         {
             await _appointmentService.RemoveAsync(id);

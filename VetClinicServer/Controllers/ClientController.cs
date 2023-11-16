@@ -17,6 +17,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Get clients")]
         public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
         {
             var clients = await _clientService.GetAllAsync();
@@ -25,6 +26,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get client by id")]
         public async Task<ActionResult<ClientDTO>> GetClient(int id)
         {
             var client = await _clientService.GetByIdAsync(id);
@@ -33,6 +35,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Create client")]
         public async Task<ActionResult<ClientDTO>> PostClient([FromBody] ClientDTO clientDto)
         {
             clientDto = await _clientService.CreateAsync(clientDto);
@@ -41,6 +44,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPut]
+        [SwaggerOperation(Summary = "Update client")]
         public async Task<ActionResult<ClientDTO>> Put([FromBody] ClientDTO clientDto)
         {
             await _clientService.UpdateAsync(clientDto);
@@ -50,7 +54,8 @@ namespace VetClinicServer.Controllers
 
         [HttpGet]
         [Route("/api/patients/{id}/client")]
-        [SwaggerOperation(Tags = new[] { "Patient" })]
+        [SwaggerOperation(Tags = new[] { "Patient" },
+            Summary = "Get client by patient id")]
         public async Task<ActionResult<ClientDTO>> GetByPatientId(int id)
         {
             var result = await _clientService.GetByPatientId(id);
@@ -59,6 +64,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete client")]
         public async Task<ActionResult> Delete(int id)
         {
             await _clientService.RemoveAsync(id);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using VetClinicServer.DTOs;
 using VetClinicServer.Services;
 
@@ -16,6 +17,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Get doctors")]
         public async Task<ActionResult<IEnumerable<DoctorDTO>>> GetDoctors()
         {
             var doctors = await _doctorService.GetAllAsync();
@@ -24,6 +26,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get doctor by id")]
         public async Task<ActionResult<DoctorDTO>> GetDoctor(int id)
         {
             var doctor = await _doctorService.GetByIdAsync(id);
@@ -32,6 +35,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Create doctor")]
         public async Task<IActionResult> PostDoctor([FromBody] DoctorDTO doctorDto)
         {
             doctorDto = await _doctorService.CreateAsync(doctorDto);
@@ -40,6 +44,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPut]
+        [SwaggerOperation(Summary = "Update doctor")]
         public async Task<IActionResult> PutDoctor([FromBody] DoctorDTO doctorDto)
         {
             await _doctorService.UpdateAsync(doctorDto);
@@ -47,7 +52,8 @@ namespace VetClinicServer.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"),
+            SwaggerOperation(Summary = "Delete doctor")]
         public async Task<IActionResult> DeleteDoctor(int id)
         {
             await _doctorService.RemoveAsync(id);

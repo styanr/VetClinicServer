@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using VetClinicServer.DTOs;
 using VetClinicServer.Services;
 
@@ -16,6 +17,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Get medications")]
         public async Task<ActionResult<IEnumerable<MedicationDTO>>> GetMedications()
         {
             var medications = await _medicationService.GetAllAsync();
@@ -24,6 +26,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get medication by id")]
         public async Task<ActionResult<MedicationDTO>> GetMedication(int id)
         {
             var medication = await _medicationService.GetByIdAsync(id);
@@ -32,6 +35,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Create medication")]
         public async Task<ActionResult<MedicationDTO>> PostMedication([FromBody] MedicationDTO medicationDto)
         {
             medicationDto = await _medicationService.CreateAsync(medicationDto);
@@ -40,6 +44,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpPut]
+        [SwaggerOperation(Summary = "Update medication")]
         public async Task<ActionResult<MedicationDTO>> Put([FromBody] MedicationDTO medicationDto)
         {
             await _medicationService.UpdateAsync(medicationDto);
@@ -48,6 +53,7 @@ namespace VetClinicServer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete medication")]
         public async Task<ActionResult> Delete(int id)
         {
             await _medicationService.RemoveAsync(id);
