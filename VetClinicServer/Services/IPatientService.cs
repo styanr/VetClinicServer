@@ -6,5 +6,6 @@ namespace VetClinicServer.Services
 {
     public interface IPatientService : IService<PatientDTO>
     {
+        Task<IEnumerable<PatientDTO>> GetForClientAsync(int clientId);
     }
 }

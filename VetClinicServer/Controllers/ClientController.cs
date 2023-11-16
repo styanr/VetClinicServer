@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using VetClinicServer.DTOs;
 using VetClinicServer.Services;
 
@@ -45,6 +46,16 @@ namespace VetClinicServer.Controllers
             await _clientService.UpdateAsync(clientDto);
             
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("/api/patients/{id}/client")]
+        [SwaggerOperation(Tags = new[] { "Patient" })]
+        public async Task<ActionResult<ClientDTO>> GetByPatientId(int id)
+        {
+            var result = await _clientService.GetByPatientId(id);
+            
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using VetClinicServer.DTOs;
 using VetClinicServer.Services;
 
@@ -45,6 +46,26 @@ namespace VetClinicServer.Controllers
             await _appointmentService.UpdateAsync(appointmentDto);
 
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("/api/doctors/{id}/appointments")]
+        [SwaggerOperation(Tags = new[] { "Doctor" })]
+        public async Task<ActionResult<IEnumerable<AppointmentDTO>>> GetForDoctor(int id)
+        {
+            var appointments = await _appointmentService.GetForDoctorAsync(id);
+
+            return Ok(appointments);
+        }
+
+        [HttpGet]
+        [Route("/api/patients/{id}/appointments")]
+        [SwaggerOperation(Tags = new[] { "Patient" })]
+        public async Task<ActionResult<IEnumerable<AppointmentDTO>>> GetForPatient(int id)
+        {
+            var appointments = await _appointmentService.GetForPatientAsync(id);
+
+            return Ok(appointments);
         }
 
         [HttpDelete("{id}")]

@@ -75,6 +75,23 @@ namespace VetClinicServer.Services
             _context.Clients.Remove(client);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<ClientDTO> GetByPatientId(int patientId)
+        {
+            if (patientId < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(patientId));
+            }
+
+            var client = await _context.Clients.FirstOrDefaultAsync(c => c.Patients.Any(p => p.PatientId == patientId));
+            
+            if (client == null)
+            {
+                throw new ClientNotFoundException();
+            }
+
+            return _mapper.Map<Client, ClientDTO>(client);
+        }
     }
 
 }
