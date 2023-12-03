@@ -14,6 +14,14 @@ namespace VetClinicServer
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+                options.AddPolicy(name: "Angular",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+                    })
+            );
+
             // Add services to the container.
             builder.Services.AddDbContext<VetClinicContext>();
             builder.Services.AddAutoMapper(typeof(Program));
@@ -34,7 +42,6 @@ namespace VetClinicServer
             builder.Services.AddScoped<IDoctorService, DoctorService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
             builder.Services.AddScoped<IMedicationService, MedicationService>();
-
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -61,6 +68,8 @@ namespace VetClinicServer
             }));
 
             app.UseHttpsRedirection();
+
+            app.UseCors("Angular");
 
             app.UseAuthorization();
 
